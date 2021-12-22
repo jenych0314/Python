@@ -2,6 +2,7 @@ import copy
 
 result = []
 
+
 def compare(arr1, arr2):
     global result
 
@@ -13,14 +14,16 @@ def compare(arr1, arr2):
                 cnt1 += 1
             else:
                 cnt2 += 1
-    
+
     return result.append(min(cnt1, cnt2))
+
 
 n, m = map(int, input().split())
 # arr = [[0 for col in range(m)] for row in range(n)]
 arr = [list(map(str, input())) for row in range(n)]
 
-board = [["B" if i%2 == 0 else "W" for i in range(8)] if j%2 == 0 else ["W" if i%2 == 0 else "B" for i in range(8)] for j in range(8)]
+board = [["B" if i % 2 == 0 else "W" for i in range(8)] if j % 2 == 0 else [
+    "W" if i % 2 == 0 else "B" for i in range(8)] for j in range(8)]
 
 for i in range(n - 7):
     for j in range(m - 7):

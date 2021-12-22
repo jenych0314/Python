@@ -1,14 +1,15 @@
 def answer(n, lst):
     arr = []
-    
+
     for i in range(n):
         k = 0
         for j in range(n):
             if (lst[i][0] < lst[j][0]) and (lst[i][1] < lst[j][1]):
                 k += 1
         arr.append((i, k))
-    
+
     return arr
+
 
 n = int(input())
 lst = []

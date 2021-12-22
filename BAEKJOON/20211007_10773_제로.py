@@ -5,7 +5,7 @@ lst = []
 
 for i in range(K):
     tmp = int(sys.stdin.readline())
-    
+
     if tmp == 0:
         del lst[-1]
     else:
