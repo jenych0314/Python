@@ -1,4 +1,5 @@
 import string
+from automatic_search import AutomaticSearch
 
 while True:
     print("""Enter the English word
