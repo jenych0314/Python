@@ -41,8 +41,12 @@ class AutomaticSearch:
                 (By.CLASS_NAME, 'mean_tray')))
             meaning = mean_area[0].text
 
-            string = f'{self.word}\n{pronounce}\n{meaning}\n'
-            return string
+            example_sentence_area = WebDriverWait(self.driver, 3).until(EC.presence_of_all_elements_located(
+                (By.XPATH, '//*[@id="searchPage_example"]/div/div[1]')))
+            example_sentence = example_sentence_area[0].text
+
+            lst = [self.word, pronounce, meaning, example_sentence]
+            return lst
 
         except InvalidSessionIdException as e:
             print(e.msg)
@@ -53,8 +57,9 @@ class AutomaticSearch:
 
 
 if __name__ == '__main__':
-    word = 'woman'
+    word = 'mean'
     ChromeDriver = AutomaticSearch()
     ChromeDriver.set_word(word)
-    meaning = ChromeDriver.get_word()
-    print(meaning)
+    word_lst = ChromeDriver.get_word()
+    for line in word_lst:
+        print(line)
