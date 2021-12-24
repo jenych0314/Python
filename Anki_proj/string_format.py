@@ -44,9 +44,11 @@ class Format4Anki:
                     self.meaning_lst[i + 1] = ''
 
         string = ''
-        for line in self.meaning_lst:
-            if line:
-                string += (line + '\n')
+        for i in range(len(self.meaning_lst)):
+            if self.meaning_lst[i]:
+                if i == len(self.meaning_lst) - 1:
+                    string += self.meaning_lst[i]
+                string += (self.meaning_lst[i] + '\n')
 
         return string
 
