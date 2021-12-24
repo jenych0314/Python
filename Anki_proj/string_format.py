@@ -67,6 +67,9 @@ class Format4Anki:
                     self.tag_lst.append(f'#{word_class}')
                     break
 
+        if ' ' in self.word_lst[0]:
+            self.tag_lst.append('#숙어')
+
         string = ''.join(self.tag_lst)
         return string
 
@@ -82,7 +85,7 @@ class Format4Anki:
 
 
 if __name__ == '__main__':
-    word = 'mean'
+    word = 'a lot of'
     auto_search = AutomaticSearch()
     auto_search.set_word(word)
     word_lst = auto_search.get_word()

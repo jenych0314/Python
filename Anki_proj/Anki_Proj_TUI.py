@@ -44,7 +44,7 @@ while program_start:
         program_start = False
         break
     for char in input_word:
-        if not char in ascii_letters:
+        if (not char in ascii_letters) and (char != ' '):
             print("pls enter the English word")
             reset = True
             break
