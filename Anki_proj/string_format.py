@@ -4,7 +4,7 @@ from automatic_search import AutomaticSearch
 
 class Format4Anki:
     word_classes = ['명사', '대명사', '동사', '부사', '형용사', '전치사', '접속사', '감탄사']
-    other_lst = ['문형', '유의어', '반의어', '참고어']
+    other_lst = ['문형', '유의어', '반의어', '참고어', '상호참조', 'Help']
     about_pronounce = ['발음듣기', '반복듣기']
     broken_char_in_utf8 = {'∙': '/', 'ˌ': ', ', 'ˈ': '\''}
 
@@ -31,11 +31,13 @@ class Format4Anki:
                         self.meaning_lst[i] = f'{obj}: {self.meaning_lst[i]}'
                         break
                 self.meaning_lst[i - 1] = ''
+
             for word_class in self.word_classes:
                 if (word_class in self.meaning_lst[i]) and (self.meaning_lst[i + 1].startswith('1. ')) and (i != 0):
                     self.meaning_lst[i] = '\n' + self.meaning_lst[i]
                     break
-            if (self.meaning_lst[i][1:3] == '. '):
+
+            if (self.meaning_lst[i][1:3] == '. ') and (self.meaning_lst[i + 1][1:3] != '. '):
                 for char in ascii_letters:
                     if char in self.meaning_lst[i + 1]:
                         break
@@ -43,12 +45,17 @@ class Format4Anki:
                     self.meaning_lst[i] = f'{self.meaning_lst[i]}//{self.meaning_lst[i + 1]}'
                     self.meaning_lst[i + 1] = ''
 
-        string = ''
+        temp = []
         for i in range(len(self.meaning_lst)):
             if self.meaning_lst[i]:
-                if i == len(self.meaning_lst) - 1:
-                    string += self.meaning_lst[i]
-                string += (self.meaning_lst[i] + '\n')
+                temp.append(self.meaning_lst[i])
+
+        string = ''
+        for i in range(len(temp)):
+            if i == len(temp) - 1:
+                string += temp[i]
+            else:
+                string += (temp[i] + '\n')
 
         return string
 
@@ -76,8 +83,8 @@ class Format4Anki:
         return string
 
     def replace_broken_char(self):
-        exam_lst = [self.word_lst, self.pronounce_lst,
-                    self.meaning_lst, self.ex_sentence_lst]
+        exam_lst = [self.word_lst, self.pronounce_lst, self.meaning_lst, self.ex_sentence_lst]
+
         for obj in exam_lst:
             for i in range(len(obj)):
                 for char in self.broken_char_in_utf8.keys():
@@ -87,7 +94,7 @@ class Format4Anki:
 
 
 if __name__ == '__main__':
-    word = 'a lot of'
+    word = 'exhibitionism'
     auto_search = AutomaticSearch()
     auto_search.set_word(word)
     word_lst = auto_search.get_word()
