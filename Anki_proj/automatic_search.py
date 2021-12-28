@@ -49,7 +49,7 @@ class AutomaticSearch:
             return lst
 
         except Exception as e:
-                print(type(e))
+                print(f'{self.word} -> {type(e)}')
                 return self.word
 
         finally:
@@ -58,7 +58,7 @@ class AutomaticSearch:
 
 
 if __name__ == '__main__':
-    input_word = 'preadfdict'
+    input_word = 'photocopier'
     ChromeDriver = AutomaticSearch()
     ChromeDriver.set_word(input_word)
     word_lst = ChromeDriver.get_word()

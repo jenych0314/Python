@@ -4,7 +4,8 @@ from automatic_search import AutomaticSearch
 
 class Format4Anki:
     word_classes = ['명사', '대명사', '동사', '부사', '형용사', '전치사', '접속사', '감탄사']
-    other_lst = ['문형', '유의어', '반의어', '참고어', '상호참조', 'Help']
+    other_lst = ['문형', '유의어', '반의어', '참고어', '상호참조', 'Help', '약어']
+    ignore_lst = ['VN']
     about_pronounce = ['발음듣기', '반복듣기']
     broken_char_in_utf8 = {'∙': '/', 'ˌ': ', ', 'ˈ': '\''}
 
@@ -25,37 +26,51 @@ class Format4Anki:
 
     def format_meaning(self):
         for i in range(len(self.meaning_lst)):
-            if self.meaning_lst[i - 1] in self.other_lst:
+            idx = self.meaning_lst[i].find(' ')
+
+            if (self.meaning_lst[i] in self.word_classes) and (i != 0):  # ex) 명사
+                if i + 1 < len(self.meaning_lst):
+                    if self.meaning_lst[i + 1].startswith('1. '):
+                        for word_class in self.word_classes:
+                            if (word_class in self.meaning_lst[i]):
+                                self.meaning_lst[i] = '\n' + self.meaning_lst[i]
+                                break
+
+            elif (self.meaning_lst[i][idx - 1:idx] == '.'):  # ex) 7. U // 일
+                if i + 1 < len(self.meaning_lst):
+                    idx = self.meaning_lst[i + 1].find(' ')
+
+                    if (self.meaning_lst[i + 1][idx - 1:idx] != '.') and not(self.meaning_lst[i + 1] in self.other_lst):
+
+                        temp_string = self.meaning_lst[i + 1]
+                        # for ignore_char in self.ignore_lst:
+                        #     temp_string = temp_string.replace(ignore_char, '')
+
+                        for char in ascii_letters:
+                            if char in temp_string:
+                                break
+                        else:
+                            self.meaning_lst[i] = f'{self.meaning_lst[i]} // {self.meaning_lst[i + 1]}'
+                            self.meaning_lst[i + 1] = ''
+            
+            elif self.meaning_lst[i - 1] in self.other_lst:  # ex) 문형: sth ~
                 for obj in self.other_lst:
                     if self.meaning_lst[i - 1] == obj:
                         self.meaning_lst[i] = f'{obj}: {self.meaning_lst[i]}'
                         break
                 self.meaning_lst[i - 1] = ''
 
-            for word_class in self.word_classes:
-                if (word_class in self.meaning_lst[i]) and (self.meaning_lst[i + 1].startswith('1. ')) and (i != 0):
-                    self.meaning_lst[i] = '\n' + self.meaning_lst[i]
-                    break
-
-            if (self.meaning_lst[i][1:3] == '. ') and (self.meaning_lst[i + 1][1:3] != '. '):
-                for char in ascii_letters:
-                    if char in self.meaning_lst[i + 1]:
-                        break
-                else:
-                    self.meaning_lst[i] = f'{self.meaning_lst[i]}//{self.meaning_lst[i + 1]}'
-                    self.meaning_lst[i + 1] = ''
-
-        temp = []
+        temp_lst = []
         for i in range(len(self.meaning_lst)):
             if self.meaning_lst[i]:
-                temp.append(self.meaning_lst[i])
+                temp_lst.append(self.meaning_lst[i])
 
         string = ''
-        for i in range(len(temp)):
-            if i == len(temp) - 1:
-                string += temp[i]
+        for i in range(len(temp_lst)):
+            if i == len(temp_lst) - 1:
+                string += temp_lst[i]
             else:
-                string += (temp[i] + '\n')
+                string += (temp_lst[i] + '\n')
 
         return string
 
@@ -75,9 +90,13 @@ class Format4Anki:
                 if (word_class in self.meaning_lst[i]) and (self.meaning_lst[i + 1].startswith('1. ')):
                     self.tag_lst.append(f'#{word_class}')
                     break
+        
+        # if len(self.tag_lst) == 0:
+        #     if ' ' in self.word_lst[0]:
+        #         self.tag_lst.append('#숙어')
 
-        if ' ' in self.word_lst[0]:
-            self.tag_lst.append('#숙어')
+        if len(self.tag_lst) == 0:
+            self.tag_lst.append('#Check')
 
         string = ''.join(self.tag_lst)
         return string
@@ -94,7 +113,7 @@ class Format4Anki:
 
 
 if __name__ == '__main__':
-    word = 'exhibitionism'
+    word = 'secretary'
     auto_search = AutomaticSearch()
     auto_search.set_word(word)
     word_lst = auto_search.get_word()

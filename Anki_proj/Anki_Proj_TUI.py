@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from string import ascii_letters
-import string
 import time
 import os
 from automatic_search import AutomaticSearch
@@ -42,9 +41,7 @@ class AnkiTui:
         while program_start:
             reset = False
 
-            intro_msg = """Enter the English word
-            (If you want to quit then pls enter the \'quit\'.)
-            -> """
+            intro_msg = 'Enter the English word\n(If you want to quit then pls enter the \'quit\'.)\n-> '
             print(intro_msg, end='')
             input_word = input().lower().strip()
 
@@ -65,7 +62,7 @@ class AnkiTui:
                 if self.temp_lst:
                     print('You should re-do about these ones')
                     for obj in self.temp_lst:
-                        print(obj, end = ', ')
+                        print(obj)
 
             self.input_words.append(input_word)
     
