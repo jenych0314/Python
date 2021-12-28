@@ -91,14 +91,12 @@ class Format4Anki:
                     self.tag_lst.append(f'#{word_class}')
                     break
         
-        # if len(self.tag_lst) == 0:
-        #     if ' ' in self.word_lst[0]:
-        #         self.tag_lst.append('#숙어')
-
-        if len(self.tag_lst) == 0:
-            self.tag_lst.append('#Check')
-
-        string = ''.join(self.tag_lst)
+        string = ''
+        for i in range(len(self.tag_lst)):
+            if i == len(self.tag_lst) - 1:
+                string += self.tag_lst[i]
+            else:
+                string += (self.tag_lst[i] + ' ')
         return string
 
     def replace_broken_char(self):
