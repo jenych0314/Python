@@ -3,8 +3,8 @@ from automatic_search import AutomaticSearch
 
 
 class Format4Anki:
-    word_classes = ['명사', '대명사', '동사', '부사', '형용사', '전치사', '접속사', '감탄사']
-    other_lst = ['문형', '유의어', '반의어', '참고어', '상호참조', 'Help', '약어']
+    word_classes = ['동사', '명사', '대명사', '형용사', '부사', '전치사', '접속사', '감탄사', '관사']
+    other_lst = ['문형', '유의어', '반의어', '참고어', '상호참조', 'Help', '약어', '부가설명']
     ignore_lst = ['VN']
     about_pronounce = ['발음듣기', '반복듣기']
     broken_char_in_utf8 = {'∙': '/', 'ˌ': ', ', 'ˈ': '\''}
@@ -40,7 +40,7 @@ class Format4Anki:
                 if i + 1 < len(self.meaning_lst):
                     idx = self.meaning_lst[i + 1].find(' ')
 
-                    if (self.meaning_lst[i + 1][idx - 1:idx] != '.') and not(self.meaning_lst[i + 1] in self.other_lst):
+                    if (self.meaning_lst[i + 1][idx - 1:idx] != '.') and not(self.meaning_lst[i + 1] in self.other_lst) and not(self.meaning_lst[i + 1] in self.word_classes):
 
                         temp_string = self.meaning_lst[i + 1]
                         # for ignore_char in self.ignore_lst:

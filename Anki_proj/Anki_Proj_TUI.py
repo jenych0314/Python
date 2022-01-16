@@ -60,7 +60,7 @@ class AnkiTui:
                 self.main()
                 
                 if self.temp_lst:
-                    print('You should re-do about these ones')
+                    print('You should re-do about these ones:')
                     for obj in self.temp_lst:
                         print(obj)
 
