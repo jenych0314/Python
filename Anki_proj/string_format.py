@@ -3,7 +3,7 @@ from automatic_search import AutomaticSearch
 
 
 class Format4Anki:
-    word_classes = ['동사', '명사', '대명사', '형용사', '부사', '전치사', '접속사', '감탄사', '관사']
+    word_classes = ['동사', '명사', '대명사', '형용사', '부사', '전치사', '접속사', '감탄사', '관사', '한정사']
     other_lst = ['문형', '유의어', '반의어', '참고어', '상호참조', 'Help', '약어', '부가설명']
     ignore_lst = ['VN']
     about_pronounce = ['발음듣기', '반복듣기']
@@ -88,6 +88,8 @@ class Format4Anki:
         for i in range(len(self.meaning_lst)):
             for word_class in self.word_classes:
                 if (word_class in self.meaning_lst[i]) and (self.meaning_lst[i + 1].startswith('1. ')):
+                    if word_class == '명사' and len(self.meaning_lst[i]) != 3:  # 명사와 대명사 구분
+                        continue
                     self.tag_lst.append(f'#{word_class}')
                     break
         
