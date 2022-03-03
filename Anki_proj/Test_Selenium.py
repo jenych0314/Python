@@ -11,10 +11,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 URL = 'https://en.dict.naver.com/#/main'
 
-# driver = webdriver.Chrome(
-#     executable_path='C:\\Users\\jeony\\OneDrive\\바탕 화면\\Python\\Anki_proj\\chromedriver')  # Windows
-driver = webdriver.Chrome(executable_path=/home/jyc/Desktop/Python/Anki_proj/chromedriver)
-driver.get(url=URL)
+driver = webdriver.Chrome(executable_path='C:\\Users\\jeony\\OneDrive\\바탕 화면\\Python\\Anki_proj\\chromedriver')  # Windows
 
 try:
     element = WebDriverWait(driver, 5).until(
