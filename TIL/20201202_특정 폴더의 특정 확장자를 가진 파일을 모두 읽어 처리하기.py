@@ -1,10 +1,11 @@
 import codecs
 import os
 
+
 class CFolderFile:
     def __init__(self):
         self.ftypelist = {}
-    
+
     def FolderNavigate(self, path, extlst):
         for fname in os.listdir(path):
             fullname = os.path.join(path, fname)
@@ -22,8 +23,9 @@ class CFolderFile:
                         self.ftypelist[ftype] = 1
                     else:
                         self.ftypelist[ftype] = self.ftypelist[ftype] + 1
-        
+
         return True
+
 
 def readFile(self, path):
 
@@ -36,17 +38,17 @@ def readFile(self, path):
         f.close()
         try:
             ftype = 'utf-8'
-            f = codecs.open(path,'r','utf-8')
+            f = codecs.open(path, 'r', 'utf-8')
             lines = f.readlines()
         except:
             try:
                 ftype = 'utf-16'
-                f = codecs.open(path,'r','utf-16')
+                f = codecs.open(path, 'r', 'utf-16')
                 lines = f.readlines()
             except:
                 try:
                     ftype = 'ANSI'
-                    f = codecs.open(path,'r','ANSI')
+                    f = codecs.open(path, 'r', 'ANSI')
                     lines = f.readlines()
                 except:
                     print('file 읽기 실패', path)
@@ -57,6 +59,7 @@ def readFile(self, path):
         sline = line.strip()
 
     return (True, ftype)
+
 
 Path = 'C:\Users\jeony\Downloads\media'
 extlist = {'jfif'}

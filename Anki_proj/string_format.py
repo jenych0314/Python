@@ -3,8 +3,10 @@ from automatic_search import AutomaticSearch
 
 
 class Format4Anki:
-    word_classes = ['동사', '명사', '대명사', '형용사', '부사', '전치사', '접속사', '감탄사', '관사', '한정사']
-    other_lst = ['문형', '유의어', '반의어', '참고어', '상호참조', 'Help', '약어', '부가설명']
+    word_classes = ['동사', '명사', '대명사', '형용사', '부사',
+                    '전치사', '접속사', '감탄사', '관사', '한정사', '타동사', '자동사', '수사']
+    other_lst = ['문형', '유의어', '반의어', '참고어',
+                 '상호참조', 'Help', '약어', '부가설명', '전문용어']
     ignore_lst = ['VN']
     about_pronounce = ['발음듣기', '반복듣기']
     broken_char_in_utf8 = {'∙': '/', 'ˌ': ', ', 'ˈ': '\''}
@@ -33,7 +35,8 @@ class Format4Anki:
                     if self.meaning_lst[i + 1].startswith('1. '):
                         for word_class in self.word_classes:
                             if (word_class in self.meaning_lst[i]):
-                                self.meaning_lst[i] = '\n' + self.meaning_lst[i]
+                                self.meaning_lst[i] = '\n' + \
+                                    self.meaning_lst[i]
                                 break
 
             elif (self.meaning_lst[i][idx - 1:idx] == '.'):  # ex) 7. U // 일
@@ -52,7 +55,7 @@ class Format4Anki:
                         else:
                             self.meaning_lst[i] = f'{self.meaning_lst[i]} // {self.meaning_lst[i + 1]}'
                             self.meaning_lst[i + 1] = ''
-            
+
             elif self.meaning_lst[i - 1] in self.other_lst:  # ex) 문형: sth ~
                 for obj in self.other_lst:
                     if self.meaning_lst[i - 1] == obj:
@@ -88,11 +91,12 @@ class Format4Anki:
         for i in range(len(self.meaning_lst)):
             for word_class in self.word_classes:
                 if (word_class in self.meaning_lst[i]) and (self.meaning_lst[i + 1].startswith('1. ')):
-                    if word_class == '명사' and len(self.meaning_lst[i]) != 3:  # 명사와 대명사 구분
+                    # 명사와 대명사 구분
+                    if word_class == '명사' and len(self.meaning_lst[i]) != 3:
                         continue
                     self.tag_lst.append(f'#{word_class}')
                     break
-        
+
         string = ''
         for i in range(len(self.tag_lst)):
             if i == len(self.tag_lst) - 1:
@@ -102,7 +106,8 @@ class Format4Anki:
         return string
 
     def replace_broken_char(self):
-        exam_lst = [self.word_lst, self.pronounce_lst, self.meaning_lst, self.ex_sentence_lst]
+        exam_lst = [self.word_lst, self.pronounce_lst,
+                    self.meaning_lst, self.ex_sentence_lst]
 
         for obj in exam_lst:
             for i in range(len(obj)):
@@ -113,7 +118,7 @@ class Format4Anki:
 
 
 if __name__ == '__main__':
-    word = 'secretary'
+    word = 'pan'
     auto_search = AutomaticSearch()
     auto_search.set_word(word)
     word_lst = auto_search.get_word()

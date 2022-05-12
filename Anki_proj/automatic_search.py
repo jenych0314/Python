@@ -15,7 +15,7 @@ class AutomaticSearch:
         self.options.add_argument('headless')
         self.driver = webdriver.Chrome(self.DRIVER_PATH, options=self.options)
         self.word = ''
-        self.wait_time = 2 # sec
+        self.wait_time = 2  # sec
 
     def set_word(self, word):
         self.word = word
@@ -28,7 +28,7 @@ class AutomaticSearch:
                 EC.presence_of_element_located((By.NAME, 'query')))
             search_box.send_keys(self.word)
             search_box.send_keys(Keys.RETURN)
-            
+
             objs = WebDriverWait(self.driver, self.wait_time).until(EC.presence_of_all_elements_located(
                 (By.XPATH, '/html/body/div[2]/div[2]/div[1]/div[3]/div/div[1]/div[1]/a/strong')))
             objs[0].click()
@@ -49,8 +49,8 @@ class AutomaticSearch:
             return lst
 
         except Exception as e:
-                print(f'{self.word} -> {type(e)}')
-                return self.word
+            print(f'{self.word} -> {type(e)}')
+            return self.word
 
         finally:
             sleep(2)

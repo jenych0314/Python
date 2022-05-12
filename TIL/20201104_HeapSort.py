@@ -2,6 +2,7 @@ import sys
 import heapq
 input = sys.stdin.readline
 
+
 def heapsort(iterable):
     h = []
     result = []
@@ -12,6 +13,7 @@ def heapsort(iterable):
     for i in range(len(h)):
         result.append(heapq.heappop(h[i]))
     return result
+
 
 n = list(input())
 arr = []
