@@ -1,4 +1,5 @@
 import sys
+input = sys.stdin.readline
 
 
 def binary_search(nums, target):
@@ -19,14 +20,14 @@ def binary_search(nums, target):
     return 0 if (idx == -1) else 1
 
 
-N = int(sys.stdin.readline().strip())
+N = int(input().strip())
 
-num_lst = list(map(int, sys.stdin.readline().strip().split()))
+num_lst = list(map(int, input().strip().split()))
 num_lst.sort()  # 나중에는 정렬하는 것도 직접해보는 걸로 하자.
 
-M = int(sys.stdin.readline().strip())
+M = int(input().strip())
 
-find_lst = list(map(int, sys.stdin.readline().strip().split()))
+find_lst = list(map(int, input().strip().split()))
 
 for i in range(M):
     print(binary_search(num_lst, find_lst[i]))
